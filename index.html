@@ -22,7 +22,7 @@ button{width:100%;margin-top:13px;padding:14px;border:0;border-radius:12px;backg
   <h1 class="title">Our Forever Memories</h1>
   <p class="sub">“Tempus Fugit • Amor Manet”<br>Time flies, love remains.</p>
   <form id="gate">
-    <input id="password" type="password" inputmode="numeric" maxlength="20" placeholder="Enter our secret code" aria-label="Password" required>
+    <input id="password" type="password" inputmode="text" maxlength="20" placeholder="Enter our secret code" aria-label="Password" required>
     <button type="submit">Unlock Memories ✨</button>
     <div id="error" role="status"></div>
   </form>
@@ -32,7 +32,7 @@ button{width:100%;margin-top:13px;padding:14px;border:0;border-radius:12px;backg
 const DESTINATION = "https://drive.google.com/drive/folders/1-VYn6NXyXVI6r42bU-glSCBMNKD8oRGt";
 document.getElementById("gate").addEventListener("submit", function(e){
   e.preventDefault();
-  if(document.getElementById("password").value === "1122"){
+  if(document.getElementById("password").value === "22@11"){
     window.location.href = DESTINATION;
   } else {
     document.getElementById("error").textContent = "That code doesn't match. Try again 💜";
