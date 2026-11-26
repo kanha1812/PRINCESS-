@@ -9,8 +9,10 @@
 *{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:22px;background:radial-gradient(circle at top,#8154a5,#28133e 72%);font-family:Georgia,serif;color:#fff}
 .card{width:min(100%,430px);padding:34px 25px;border:1px solid #ffffff55;border-radius:25px;background:#ffffff15;box-shadow:0 18px 55px #16092388;text-align:center;backdrop-filter:blur(10px)}
 .mark{font-size:38px;margin-bottom:10px}.eyebrow{letter-spacing:3px;font:11px Arial,sans-serif;color:#ead8ff}.title{font-size:31px;margin:12px 0 8px}.sub{font-style:italic;color:#eadcf5;line-height:1.6;margin:0 0 25px}
-input{width:100%;padding:15px;border-radius:12px;border:1px solid #e5cfff;background:#fff;color:#32164a;font-size:18px;text-align:center;letter-spacing:5px;outline:none}
-button{width:100%;margin-top:13px;padding:14px;border:0;border-radius:12px;background:#ead6ff;color:#381b51;font-weight:bold;font-size:16px;cursor:pointer}
+input{width:100%;padding:15px;border-radius:12px;border:1px solid #e5cfff;background:#fff;color:#32164a;font-size:22px;text-align:center;letter-spacing:5px;outline:none}
+.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:14px}
+.keypad button{margin:0;padding:13px;border:1px solid #ead6ff;border-radius:12px;background:#ffffff20;color:#fff;font-size:19px;font-weight:bold;cursor:pointer}
+.unlock{width:100%;margin-top:13px;padding:14px;border:0;border-radius:12px;background:#ead6ff;color:#381b51;font-weight:bold;font-size:16px;cursor:pointer}
 #error{min-height:22px;color:#ffd0dc;font:13px Arial,sans-serif;margin-top:10px}
 .foot{font:11px Arial,sans-serif;color:#dfc9ee;margin-top:22px;letter-spacing:1px}
 </style>
@@ -22,21 +24,35 @@ button{width:100%;margin-top:13px;padding:14px;border:0;border-radius:12px;backg
   <h1 class="title">Our Forever Memories</h1>
   <p class="sub">“Tempus Fugit • Amor Manet”<br>Time flies, love remains.</p>
   <form id="gate">
-    <input id="password" type="password" inputmode="text" maxlength="20" placeholder="Enter our secret code" aria-label="Password" required>
-    <button type="submit">Unlock Memories ✨</button>
+    <input id="password" type="password" maxlength="5" placeholder="Enter our secret code" aria-label="Password" readonly required>
+    <div class="keypad" aria-label="On-screen password keypad">
+      <button type="button" data-key="1">1</button><button type="button" data-key="2">2</button><button type="button" data-key="3">3</button>
+      <button type="button" data-key="4">4</button><button type="button" data-key="5">5</button><button type="button" data-key="6">6</button>
+      <button type="button" data-key="7">7</button><button type="button" data-key="8">8</button><button type="button" data-key="9">9</button>
+      <button type="button" data-key="@">@</button><button type="button" data-key="0">0</button><button type="button" data-key="back">⌫</button>
+    </div>
+    <button class="unlock" type="submit">Unlock Memories ✨</button>
     <div id="error" role="status"></div>
   </form>
   <div class="foot">SEMPER IN CORDE · ALWAYS IN THE HEART</div>
 </main>
 <script>
 const DESTINATION = "https://drive.google.com/drive/folders/1-VYn6NXyXVI6r42bU-glSCBMNKD8oRGt";
+const field = document.getElementById("password");
+document.querySelectorAll("[data-key]").forEach(function(button){
+  button.addEventListener("click", function(){
+    const key = button.dataset.key;
+    if(key === "back"){ field.value = field.value.slice(0,-1); }
+    else if(field.value.length < 5){ field.value += key; }
+  });
+});
 document.getElementById("gate").addEventListener("submit", function(e){
   e.preventDefault();
-  if(document.getElementById("password").value === "22@11"){
+  if(field.value === "22@11"){
     window.location.href = DESTINATION;
   } else {
     document.getElementById("error").textContent = "That code doesn't match. Try again 💜";
-    document.getElementById("password").value = "";
+    field.value = "";
   }
 });
 </script>
